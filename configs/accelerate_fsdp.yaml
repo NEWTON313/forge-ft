@@ -1,0 +1,14 @@
+# FSDP2 sur 4 GPU d'une même machine (leçon 3.4)
+#   accelerate launch --config_file configs/accelerate_fsdp.yaml examples/03_sft_lora.py full
+compute_environment: LOCAL_MACHINE
+distributed_type: FSDP
+num_machines: 1
+num_processes: 4                     # un processus par GPU
+mixed_precision: bf16
+fsdp_config:
+  fsdp_version: 2
+  fsdp_auto_wrap_policy: TRANSFORMER_BASED_WRAP   # un « morceau » partagé par bloc Transformer
+  fsdp_reshard_after_forward: true                # équivalent ZeRO-3 : poids re-partagés après usage
+  fsdp_cpu_ram_efficient_loading: true            # seul le rang 0 lit les poids sur disque
+  fsdp_state_dict_type: SHARDED_STATE_DICT        # checkpoints partagés ; FULL_STATE_DICT pour l'export
+  fsdp_activation_checkpointing: true

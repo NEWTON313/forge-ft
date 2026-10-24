@@ -1,0 +1,29 @@
+[project]
+name = "forge-ft"
+version = "1.0.0"
+description = "Forge — laboratoire de fine-tuning et d'alignement (cours IAMaestro : Fine-Tuning & Alignement de Modèles Avancés)"
+requires-python = ">=3.11"
+# PyTorch s'installe à part, avec la version CUDA de votre carte : voir README.md
+dependencies = [
+  "transformers>=5.19",
+  "trl>=1.15",
+  "peft>=0.21",
+  "datasets>=5.0",
+  "accelerate>=1.15",
+  "bitsandbytes>=0.50",   # QLoRA et quantization 8/4 bits
+  "numpy>=2.0",
+]
+
+[project.optional-dependencies]
+dev = ["pytest>=8"]
+
+[build-system]
+requires = ["setuptools>=69"]
+build-backend = "setuptools.build_meta"
+
+[tool.setuptools]
+packages = ["forge"]
+
+[tool.pytest.ini_options]
+pythonpath = ["."]
+filterwarnings = ["ignore::DeprecationWarning", "ignore::UserWarning", "ignore::FutureWarning"]
